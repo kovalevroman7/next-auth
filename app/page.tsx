@@ -1,9 +1,18 @@
 import Image from 'next/image'
 import styles from './page.module.css'
+import {getServerSession} from "next-auth";
 
-export default function Home() {
+import {authOptions} from "@/app/api/auth/[...nextauth]/route";
+
+import {SigninButton} from "@/app/SigninButton";
+
+export default async function Home() {
+  const session = await getServerSession(authOptions);
+
   return (
     <main className={styles.main}>
+      Session: {session?.user?.email || ""}
+      <SigninButton />
       <div className={styles.description}>
         <p>
           Get started by editing&nbsp;
